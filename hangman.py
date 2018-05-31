@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 import hangmanart
 from wordlist import words
@@ -11,6 +11,7 @@ wrongCount = 0
 maxWrong = 7
 
 print(hangmanart.art[wrongCount])
+print(''.join(hidden))
 
 while((findWord != ''.join(hidden)) and (wrongCount < maxWrong)):
     enteredChar = input('Enter a character: ').lower()
@@ -21,7 +22,6 @@ while((findWord != ''.join(hidden)) and (wrongCount < maxWrong)):
 
     for i, c in enumerate(findWord):
         if c == enteredChar:
-            print(enteredChar, 'found at', i)
             hidden[i] = enteredChar
 
     print(hangmanart.art[wrongCount])
