@@ -3,10 +3,16 @@
 import hangmanart
 from wordlist import words
 import random
+import os
+
+def ClearScreen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+ClearScreen()
 
 findWord = words[random.randrange(len(words))]
 hidden = list('_' * len(findWord))
-wrongLetters = list('')
+wrongLetters = list()
 
 wrongCount = 0
 maxWrong = 7
@@ -24,7 +30,6 @@ while((findWord != ''.join(hidden)) and (wrongCount < maxWrong) and not guessed)
     # Validate char
     if enteredChar.isalpha() and len(enteredChar) == 1:
         if enteredChar not in findWord:
-            print('The letter', enteredChar, 'is not in the word')
             wrongCount += 1
             wrongLetters.append(enteredChar)
 
@@ -32,12 +37,6 @@ while((findWord != ''.join(hidden)) and (wrongCount < maxWrong) and not guessed)
         for i, c in enumerate(findWord):
             if c == enteredChar:
                 hidden[i] = enteredChar
-
-        # Print game elements
-        print(hangmanart.art[wrongCount])
-        print(''.join(hidden))
-        if len(wrongLetters) > 0:
-            print('You have incorrectly guessed:', wrongLetters)
 
     # Prompt for final guess
     elif enteredChar == '!':
@@ -48,6 +47,13 @@ while((findWord != ''.join(hidden)) and (wrongCount < maxWrong) and not guessed)
     # Handle non-alpha and more than one char
     else:
         print('Please enter a letter')
+
+    ClearScreen()
+    # Print game elements
+    print(hangmanart.art[wrongCount])
+    print(''.join(hidden))
+    if wrongLetters:
+        print('You have incorrectly guessed:', ', '.join(wrongLetters))
 
 # Determine if player won or lost
 if findWord == ''.join(hidden):
